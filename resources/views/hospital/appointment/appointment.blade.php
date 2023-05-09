@@ -5,14 +5,15 @@
         <div class="row">
             <div class="col-md-6 bg-light p-5">
                 <div>
-                    <form>
+                    <form action="{{route('show.appointment')}}" method="post">
+                        @csrf
                         <div>
                             <label for=""> <h6 class="text-dark">Appointment Date</h6> </label>
-                            <input type="date" class="form-control mt-2">
+                            <input type="date" name="appointment_date" class="form-control mt-2">
                         </div>
                         <div class="mt-3">
                             <label for=""><h6 class="text-dark">Select Department</h6></label>
-                            <select name="" id="" class="form-control mt-2">
+                            <select name="department" id="" class="form-control mt-2">
                                 <option disabled selected>--Select--</option>
                                 @foreach($departments as $department)
                                     <option value="">{{$department->name}}</option>
@@ -21,10 +22,10 @@
                         </div>
                         <div class="mt-3">
                             <label for=""><h6 class="text-dark">Select Doctor</h6></label>
-                            <select name="" id="" class="form-control mt-2">
+                            <select name="doctor_id" id="" class="form-control mt-2">
                                 <option disabled selected>--Select--</option>
                                 @foreach($doctors as $doctor)
-                                    <option value="">{{$doctor->doctor_name}}</option>
+                                    <option value="{{$doctor->id}}">{{$doctor->doctor_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -33,7 +34,7 @@
                         </div>
                         <div class="mt-3">
                             <label for=""><h6 class="text-dark">Fee</h6></label>
-                            <input type="number" disabled class="form-control mt-2">
+                            <input type="number" name="fee"  class="form-control mt-2">
                         </div>
                         <div class="mt-3">
                             <input type="submit" class="btn btn-success" value="Add">
@@ -48,21 +49,28 @@
                         <tr>
                             <th scope="col">SL No</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Department</th>
                             <th scope="col">Doctor Name</th>
                             <th scope="col">Fee</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>reitj</td>
-                            <td>reitj</td>
-                            <td>reitj</td>
-                            <td>reitj</td>
-                            <td>reitj</td>
-                            <td>reitj</td>
-                        </tr>
+                        @php $i=1 @endphp
+                        @foreach($appointments as $appointment)
+                            <tr>
+                                <td>{{$i}}</td>
+                                <td>{{$appointment->name}}</td>
+
+                                <td>{{$appointment->price}}</td>
+                                <td>{{$appointment->quantity}}</td>
+                                <td>
+                                    <a href="{{route('remove.appointment',['id'=>$appointment->id])}}" class="btn btn-danger" title="Delete" id="delete" ><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            @php $i++ @endphp
+                        @endforeach
+
+
                         {{--                    @php $i=1; @endphp--}}
                         {{--                    @foreach($doctors as $doctor)--}}
                         {{--                        <tr>--}}
