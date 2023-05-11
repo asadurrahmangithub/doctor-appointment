@@ -35,7 +35,11 @@ Route::controller(AppointmentController::class)->group(function () {
     Route::get('/appointment', 'index')->name('appointment');
     Route::post('/show/appointment', 'show')->name('show.appointment');
 
-    Route::get('/remove/appointment', 'remove')->name('remove.appointment');
+    Route::get('/remove/appointment/{id}', 'remove')->name('remove.appointment');
+
+    Route::post('/store/appointment', 'store')->name('store.appointment');
+
+
 
 });
 

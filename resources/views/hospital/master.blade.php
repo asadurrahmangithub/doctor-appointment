@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Doctor Appointment</title>
     <link rel="stylesheet" href="{{asset('hospital/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('hospital/assets/css/style.css')}}">
 
@@ -13,6 +13,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
     <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" >
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <script defer src="{{asset('hospital/assets/js/script.js')}}"></script>
 
 
 </head>
@@ -34,11 +40,11 @@
 
 @yield('content')
 
-<script src="{{asset('hospital/assets/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('hospital/assets/js/style.js')}}"></script>
-
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="{{asset('hospital/assets/js/bootstrap.bundle.min.js')}}"></script>
+
+
 
 <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 

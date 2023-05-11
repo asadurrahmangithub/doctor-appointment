@@ -55,19 +55,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php $i=1 @endphp
+                        @php $i=1; $sum=0 @endphp
                         @foreach($appointments as $appointment)
                             <tr>
                                 <td>{{$i}}</td>
-                                <td>{{$appointment->name}}</td>
+                                <td>{{$appointment->attributes->appointment_date}}</td>
 
-                                <td>{{$appointment->price}}</td>
-                                <td>{{$appointment->quantity}}</td>
+                                <td>{{$appointment->attributes->doctor_id}}</td>
+                                <td>{{$appointment->attributes->fee}}</td>
                                 <td>
                                     <a href="{{route('remove.appointment',['id'=>$appointment->id])}}" class="btn btn-danger" title="Delete" id="delete" ><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
-                            @php $i++ @endphp
+
+                            @php $i++; $sum += ($appointment->attributes->fee) @endphp
                         @endforeach
 
 
@@ -89,38 +90,49 @@
                     </table>
                 </div>
                 <div class="p-3 bg-white mt-5">
-                    <div class="row">
-                        <div class="col">
-                            <h6 class="text-dark">Patient Information</h6>
+                    <form action="{{route('store.appointment')}}" id="form" method="post">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col">
+                                <h6 class="text-dark">Patient Information</h6>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Patient Name" aria-label="First name">
+                        <div class="row">
+                            <div class="col input-control">
+                                <input type="text" name="patient_name" id="patient_name" class="form-control" placeholder="Patient Name" aria-label="First name">
+                                <div class="error"></div>
+                            </div>
+                            <div class="col input-control">
+                                <input type="text" class="form-control" id="patient_phone" name="patient_phone" placeholder="Patient Phone" aria-label="Last name">
+                                <div class="error"></div>
+                            </div>
                         </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Patient Phone" aria-label="Last name">
+                        <div class="row mt-3">
+                            <div class="col">
+                                <h6 class="text-dark">Payment</h6>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <h6 class="text-dark">Payment</h6>
+                        <div class="row">
+                            <div class="col input-control">
+                                <input type="text" class="form-control" disabled @php if ($sum==0) $sum=null  @endphp value="{{$sum}}" id="total_fee" name="total_fee" placeholder="Total Fee" aria-label="First name">
+                                <div class="error"></div>
+                            </div>
+                            <div class="col input-control">
+                                <input type="text" class="form-control" id="paid_amount" name="paid_amount" placeholder="Paid Amount" aria-label="Last name">
+                                <div class="error"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <input type="text" class="form-control" disabled placeholder="Total Fee" aria-label="First name">
+                        <div class="row mt-2 px-2">
+                            <input type="submit" class="btn btn-primary" value="SUBMIT">
                         </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Paid Amount" aria-label="Last name">
-                        </div>
-                    </div>
-                    <div class="row mt-2 px-2">
-                        <input type="submit" class="btn btn-primary" value="SUBMIT">
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
 @endsection
