@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Appointment;
 use Illuminate\Http\Request;
+use DB;
 class FrontEndController extends Controller
 {
     public function index(){
         return view('hospital.home.home',[
-            'appointments' => Appointment::orderBy('id','desc')->get(),
+
+            'appointments' => DB::table('appointments')
+                ->join('doctors','appointments.doctor_id','doctors.id')
+                ->select('appointments.*','doctors.doctor_name')
+                ->orderBy('id','desc')
+                ->get(),
         ]);
     }
 

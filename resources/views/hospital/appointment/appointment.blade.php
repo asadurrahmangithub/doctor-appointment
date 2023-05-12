@@ -8,32 +8,37 @@
                     <form action="{{route('show.appointment')}}" method="post">
                         @csrf
                         <div>
-                            <label for=""> <h6 class="text-dark">Appointment Date</h6> </label>
-                            <input type="date" name="appointment_date" class="form-control mt-2">
+                            <h6 class="text-dark"><label for=""> Appointment Date </label></h6>
+                            <input type="date" name="appointment_date" class="form-control mt-3">
                         </div>
                         <div class="mt-3">
-                            <label for=""><h6 class="text-dark">Select Department</h6></label>
-                            <select name="department" id="" class="form-control mt-2">
+                            <h6 class="text-dark"><label for="">Select Department</label></h6>
+                            <select name="department" id="departmentList" class="form-control mt-3">
                                 <option disabled selected>--Select--</option>
                                 @foreach($departments as $department)
-                                    <option value="">{{$department->name}}</option>
+                                    <option value="{{ $department->id }}">{{$department->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mt-3">
-                            <label for=""><h6 class="text-dark">Select Doctor</h6></label>
-                            <select name="doctor_id" id="" class="form-control mt-2">
+                            <h6 class="text-dark"><label for="">Select Doctor</label></h6>
+                            <select name="doctor_id" id="doctorList" class="form-control mt-2">
                                 <option disabled selected>--Select--</option>
-                                @foreach($doctors as $doctor)
-                                    <option value="{{$doctor->id}}">{{$doctor->doctor_name}}</option>
+                                @foreach ($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}" class='parent-{{ $doctor->department_id }} allDoctor'>{{ $doctor->doctor_name }}</option>
                                 @endforeach
+
+{{--                                @foreach($doctors as $doctor)--}}
+{{--                                    <option value="{{$doctor->id}}">{{$doctor->doctor_name}}</option>--}}
+{{--                                @endforeach--}}
                             </select>
                         </div>
+
                         <div class="mt-2">
                             <h6 class="text-success">Available</h6>
                         </div>
                         <div class="mt-3">
-                            <label for=""><h6 class="text-dark">Fee</h6></label>
+                            <h6 class="text-dark"><label for="">Fee</label></h6>
                             <input type="number" name="fee"  class="form-control mt-2">
                         </div>
                         <div class="mt-3">
@@ -134,5 +139,90 @@
 </section>
 
 
+@endsection
 
+@section('script')
+
+    <script>
+        $('#departmentList').on('change', function () {
+            $("#doctorList").attr('disabled', false); //enable subcategory select
+            $("#doctorList").val("");
+            $(".allDoctor").attr('disabled', true); //disable all category option
+            $(".allDoctor").hide(); //hide all subcategory option
+            $(".parent-" + $(this).val()).attr('disabled', false); //enable subcategory of selected category/parent
+            $(".parent-" + $(this).val()).show();
+        });
+    </script>
+
+    <script>
+        const patient_name = document.getElementById('patient_name');
+        const patient_phone = document.getElementById('patient_phone');
+        const total_fee = document.getElementById('total_fee');
+        const paid_amount = document.getElementById('paid_amount');
+
+        const setError = (element, message) => {
+            const inputControl = element.parentElement;
+            const errorDisplay = inputControl.querySelector('.error');
+
+            errorDisplay.innerText = message;
+            inputControl.classList.add('error');
+            inputControl.classList.remove('success')
+        }
+        const setSuccess = element => {
+            const inputControl = element.parentElement;
+            const errorDisplay = inputControl.querySelector('.error');
+
+            errorDisplay.innerText = '';
+            inputControl.classList.add('success');
+            inputControl.classList.remove('error');
+        };
+
+        var formX = document.getElementById('form');
+        formX.onsubmit = function () {
+            event.preventDefault();
+            if (validateInputs())
+            {
+                formX.submit();
+            }
+        }
+
+        function validateInputs() {
+            const patientName = patient_name.value.trim();
+            const patientPhone = patient_phone.value.trim();
+            const totalFee = total_fee.value.trim();
+            const paidAmount = paid_amount.value.trim();
+
+            if(patientName === '') {
+                setError(patient_name, 'Please Enter Your Patient Name');
+                return false;
+            } else {
+                setSuccess(patient_name);
+            }
+
+            if(patientPhone === '') {
+                setError(patient_phone, 'Please Enter Your Patient Phone Number');
+                return false;
+            } else {
+                setSuccess(patient_phone);
+            }
+
+            if(totalFee === '') {
+                setError(total_fee, 'Please Add Appointment Info');
+                return false;
+            } else {
+                setSuccess(total_fee);
+            }
+
+            if(paidAmount === '') {
+                setError(paid_amount, 'Please Enter Total Fee');
+                return false;
+            } else if (paidAmount !== totalFee) {
+                setError(paid_amount, "Total Fee doesn't match");
+                return false;
+            } else {
+                setSuccess(paid_amount);
+            }
+            return true;
+        }
+    </script>
 @endsection

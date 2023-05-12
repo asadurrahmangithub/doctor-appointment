@@ -28,7 +28,7 @@
                                     <th scope="row">{{$i}}</th>
                                     <td>{{$appointment->appointment_on}}</td>
                                     <td>{{$appointment->appointment_date}}</td>
-                                    <td>{{$appointment->doctor_id}}</td>
+                                    <td>{{$appointment->doctor_name}}</td>
                                     <td>{{$appointment->patient_name}}</td>
                                     <td>{{$appointment->patient_phone}}</td>
                                 </tr>

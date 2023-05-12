@@ -50,14 +50,13 @@ class AppointmentController extends Controller
         foreach (Cart::getContent() as $item){
 
             $this->appointment = new Appointment();
-
-            $this->appointment->doctor_id = $item->doctor_id;
             $this->appointment->appointment_on = rand();
-            $this->appointment->appointment_date = $item->appointment_date;
+            $this->appointment->appointment_date = $item->attributes->appointment_date;
             $this->appointment->patient_name = $request->patient_name;
+            $this->appointment->doctor_id = $item->attributes->doctor_id;
             $this->appointment->patient_phone = $request->patient_phone;
 
-            $this->appointment->total_fee = $request->total_fee;
+            $this->appointment->total_fee = $request->paid_amount;
             $this->appointment->paid_amount = $request->paid_amount;
             $this->appointment->save();
 

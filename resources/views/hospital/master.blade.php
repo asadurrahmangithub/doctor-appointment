@@ -15,10 +15,10 @@
     <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" >
 
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <script defer src="{{asset('hospital/assets/js/script.js')}}"></script>
+{{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+{{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+{{--    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">--}}
+{{--    <script defer src="{{asset('hospital/assets/js/script.js')}}"></script>--}}
 
 
 </head>
@@ -52,7 +52,10 @@
     let table = new DataTable('#myDataTable');
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <script src="{{asset('hospital/assets/js/code.js')}}"></script>
+
+@yield('script')
 
 </body>
 </html>
